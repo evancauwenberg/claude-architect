@@ -77,6 +77,41 @@ Three scripts own the class-day lifecycle. Run them from the repo root, in this 
 .\start-sidecar-group.ps1 -NoJupyter
 ```
 
+### macOS: zsh ports of every script
+
+Every `.ps1` lifecycle script has a **zsh twin** with the same name, `.sh` instead of `.ps1`, so no PowerShell is needed on a Mac. Flags turn kebab-case: `-NoJupyter` becomes `--no-jupyter`, `-Restart` becomes `--restart`. Every script takes `--help`.
+
+**One-time install**, from the repo root:
+
+```zsh
+xcode-select --install                        # skip if already installed; better-sqlite3 compiles natively
+brew install uv node                          # Node 20+ is required by cca-cert-buddy
+uv run --project notebooks python --version   # builds notebooks/.venv; uv fetches Python 3.13 itself
+uv run --project notebooks python -m ipykernel install --user --name claude-architect --display-name "Claude Architect (notebooks/.venv)"
+npm install --prefix cca-cert-buddy           # deps for the cca-study-mcp server
+[ -f .env ] || printf 'ANTHROPIC_API_KEY=sk-ant-...\n' > .env   # then paste your real key
+```
+
+The **system `python3` version does not matter**: uv supplies the 3.13 the notebooks pin. The kernelspec lands in `~/Library/Jupyter/kernels/claude-architect/`, and its `argv[0]` must point into `notebooks/.venv/bin/`. `.mcp.json` expands **`${PROJECT_ROOT}`** for three servers, so `export PROJECT_ROOT="$PWD"` in the shell you start Claude Code from. That fixes `filesystem` only: as of 2026-09-22, `oreilly-cca-mcp` still points at the old `examples/mcp_cli` path, and `cca-study-mcp` relies on a `cwd` key Claude Code does not apply, so both still fail to connect.
+
+`preflight-class.sh` FAILs on a fresh clone because **`.vscode/mcp.json` is untracked by design**. Copy it from the instructor box, or start with `./start-sidecar-group.sh --skip-preflight` if you do not teach from VS Code Copilot.
+
+| Windows | macOS |
+|---|---|
+| `.\scripts\preflight-class.ps1` | `./scripts/preflight-class.sh` |
+| `.\start-sidecar-group.ps1 -NoJupyter` | `./start-sidecar-group.sh --no-jupyter` |
+| `.\stop-sidecar-group.ps1` | `./stop-sidecar-group.sh` |
+| `.\scripts\run-jupyter.ps1` / `stop-jupyter.ps1` | `./scripts/run-jupyter.sh` / `stop-jupyter.sh` |
+| `.\scripts\run-mcp-cli.ps1` / `run-mcp-inspector.ps1` | `./scripts/run-mcp-cli.sh` / `run-mcp-inspector.sh` |
+| `.\scripts\smoke-cookbooks.ps1 -Only X` | `./scripts/smoke-cookbooks.sh --only X` |
+| `npm run lint:voice` / `npm run preflight` | `npm run lint:voice:zsh` / `npm run preflight:zsh` |
+
+Mac-specific behavior:
+
+- **Sidecar windows** open in Terminal.app via `osascript`. The first run triggers a macOS **Automation** permission prompt. If Terminal cannot be scripted (SSH session, permission denied), Jupyter and the Inspector start in the background with logs in `$TMPDIR/claude-architect-sidecars/`, and the MCP CLI REPL is left for you to start by hand.
+- **MCP Inspector 2.x** (what `npx` resolves as of 2026-09) serves on 6274 plus a 6275 sandbox and has **no 6277 proxy**. The zsh scripts treat "UI answers over HTTP" as ready and clear all three ports. The Inspector opens its own browser tab with the auth token in the URL; `--no-browser` turns that off.
+- `stop-sidecar-group.sh` also stops the MCP CLI launcher, matched by its exact file name, never by `zsh`. Its window stays open showing `[Process completed]` so the last output is readable.
+
 Pinned versions:
 
 - `anthropic>=0.40,<1.0`

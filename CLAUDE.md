@@ -89,6 +89,12 @@ Smoke tests run via `uv run` too: `uv run --project notebooks jupyter nbconvert 
 
 `mcp-example/mcp_cli/` is a **separate uv project** with its own `pyproject.toml` and `uv.lock`. Bootstrap it independently with `cd mcp-example/mcp_cli && uv run main.py`. Intentional separation: it is reference code from Anthropic's Skilljar course (see `mcp-example/mcp_cli/NOTICE.md`), not part of the notebook environment. Two **on-rails MCP launchers** wrap it for Segment 2 demos: `.\scripts\run-mcp-cli.ps1` starts the vendored MCP CLI app with the same single-command UX as the notebooks, and `.\scripts\run-mcp-inspector.ps1` launches the MCP Inspector (`mcp dev`) against the FastMCP demo server `mcp-example/mcp_cli/mcp_server.py` - it owns Inspector ports 6274 (web UI) and 6277 (proxy) and clears any Windows half-state before launch, mirroring the `run-jupyter.ps1` / `stop-jupyter.ps1` posture.
 
+### macOS: zsh twins of every lifecycle script
+
+Every `.ps1` in `scripts/` and at the repo root has a **zsh twin** (`.sh`, same name and flags in kebab-case, shared helpers in `scripts/_lib.zsh`). The `.ps1` files remain the source of truth for the Windows class box; **change both sides together**. `notebooks/README.md` has the macOS install steps and the command mapping. `npm run lint:voice:zsh` and `npm run preflight:zsh` are the pwsh-free equivalents of the two npm scripts.
+
+**MCP Inspector 2.x drift (affects the `.ps1` side too):** `npx` now resolves Inspector 2.x, which serves on 6274 plus a 6275 sandbox and has **no 6277 proxy**, and opens its own tokenized browser tab. `run-mcp-inspector.ps1` still waits on 6277, so it should time out with a warning (not yet run on Windows). The zsh twin waits for HTTP on 6274 instead.
+
 ## Architecture: how the pieces fit
 
 This repo has no application layer. The architecture IS the teaching choreography:
