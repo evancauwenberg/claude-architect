@@ -76,7 +76,7 @@ Three transports are supported:
 
 `${ENV_VAR}` expansion works in `env`, `args`, and `headers` (recent fix per the changelog), so secrets stay out of git.
 
-**Scope trap worth internalizing.** Project scope is the repo-root **`.mcp.json`**, and that's the only project-scoped MCP file Claude Code reads. There is no `.claude/mcp.json`; that path is silently ignored, which is a miserable way to spend an afternoon. `.claude/settings.json` holds permissions and hooks, and its only MCP-adjacent keys are the `enabledMcpjsonServers` and `disabledMcpjsonServers` approval toggles, never server definitions. This repo's own [`.mcp.json`](../.mcp.json) is the worked example: six servers across three transports, including **`oreilly-cca-mcp`**, the course-owned stdio server that points Claude Code at [`examples/mcp_cli/mcp_server.py`](../examples/mcp_cli/mcp_server.py).
+**Scope trap worth internalizing.** Project scope is the repo-root **`.mcp.json`**, and that's the only project-scoped MCP file Claude Code reads. There is no `.claude/mcp.json`; that path is silently ignored, which is a miserable way to spend an afternoon. `.claude/settings.json` holds permissions and hooks, and its only MCP-adjacent keys are the `enabledMcpjsonServers` and `disabledMcpjsonServers` approval toggles, never server definitions. This repo's own [`.mcp.json`](../.mcp.json) is the worked example: six servers across three transports, including **`oreilly-cca-mcp`**, the course-owned stdio server that points Claude Code at [`mcp-example/mcp_cli/mcp_server.py`](../mcp-example/mcp_cli/mcp_server.py).
 
 ```json
 // stdio (local subprocess)

@@ -39,12 +39,12 @@
       }
     },
     "oreilly-cca-mcp": {
-      "_comment": "stdio transport. The course's own FastMCP demo server (examples/mcp_cli/mcp_server.py), the same DocumentMCP you run under `mcp dev` with the Inspector. Exposes all three MCP primitives: tools (read_doc_contents, edit_document), resources (docs://documents plus the templated docs://documents/{doc_id}), and a prompt (format). `uv run --directory` makes uv resolve the examples/mcp_cli/ project and its .venv, then runs the script, whose __main__ guard calls mcp.run(transport='stdio'). The path is absolute via ${PROJECT_ROOT} so the server starts the same way whether Claude Code launches from the repo root or a subdirectory. No auth: it runs as your user, in-process docs, no network.",
+      "_comment": "stdio transport. The course's own FastMCP demo server (mcp-example/mcp_cli/mcp_server.py), the same DocumentMCP you run under `mcp dev` with the Inspector. Exposes all three MCP primitives: tools (read_doc_contents, edit_document), resources (docs://documents plus the templated docs://documents/{doc_id}), and a prompt (format). `uv run --directory` makes uv resolve the mcp-example/mcp_cli/ project and its .venv, then runs the script, whose __main__ guard calls mcp.run(transport='stdio'). The path is absolute via ${PROJECT_ROOT} so the server starts the same way whether Claude Code launches from the repo root or a subdirectory. No auth: it runs as your user, in-process docs, no network.",
       "command": "uv",
       "args": [
         "run",
         "--directory",
-        "${PROJECT_ROOT}/examples/mcp_cli",
+        "${PROJECT_ROOT}/mcp-example/mcp_cli",
         "mcp_server.py"
       ]
     },

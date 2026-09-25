@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     On-rails launcher for `mcp dev` (the MCP Inspector) pointed at
-    examples/mcp_cli/mcp_server.py. Mirrors the lifecycle posture of
+    mcp-example/mcp_cli/mcp_server.py. Mirrors the lifecycle posture of
     run-jupyter.ps1 / stop-jupyter.ps1: it owns its known ports and
     refuses to start on top of a Windows half-state.
 
@@ -20,7 +20,7 @@
     that state before launch, then opens the Inspector URL in the default
     browser once the proxy is listening.
 
-    The vendored examples/mcp_cli/ tree is untouched. This script is a
+    The vendored mcp-example/mcp_cli/ tree is untouched. This script is a
     pure on-rails bridge; the upstream `uv run mcp dev mcp_server.py`
     workflow still works unchanged.
 
@@ -65,11 +65,11 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $repoRoot  = Split-Path -Parent $PSScriptRoot
-$mcpDir    = Join-Path $repoRoot 'examples\mcp_cli'
+$mcpDir    = Join-Path $repoRoot 'mcp-example\mcp_cli'
 $serverPy  = Join-Path $mcpDir   'mcp_server.py'
 
 if (-not (Test-Path -LiteralPath $serverPy -PathType Leaf)) {
-    throw "MCP demo server not found at $serverPy. Was the examples/mcp_cli/ tree deleted?"
+    throw "MCP demo server not found at $serverPy. Was the mcp-example/mcp_cli/ tree deleted?"
 }
 # Resolve to a canonical absolute path. If anything upstream handed us a
 # backslash-mangled string, this surfaces it here with the exact bad value

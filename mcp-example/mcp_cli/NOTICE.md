@@ -1,6 +1,6 @@
 # NOTICE - mcp_cli reference application
 
-This directory (`examples/mcp_cli/`) is a **reference MCP CLI application** vendored into the `claude-architect` repo as instructional study material. It is **not authored by Tim Warner**.
+This directory (`mcp-example/mcp_cli/`) is a **reference MCP CLI application** vendored into the `claude-architect` repo as instructional study material. It is **not authored by Tim Warner**.
 
 ## Attribution
 
@@ -34,12 +34,12 @@ The on-rails one-command path (recommended) lives in [`../../scripts/run-mcp-cli
 .\scripts\run-mcp-cli.ps1
 ```
 
-That wrapper auto-creates `examples/mcp_cli/.env` on first run, lifts `ANTHROPIC_API_KEY` from the repo-root `.env`, then hands off to `uv run --directory examples/mcp_cli main.py`. The wrapper does **not** modify any file in this directory; it sits in `scripts/` and treats `examples/mcp_cli/` as read-only vendored content.
+That wrapper auto-creates `mcp-example/mcp_cli/.env` on first run, lifts `ANTHROPIC_API_KEY` from the repo-root `.env`, then hands off to `uv run --directory mcp-example/mcp_cli main.py`. The wrapper does **not** modify any file in this directory; it sits in `scripts/` and treats `mcp-example/mcp_cli/` as read-only vendored content.
 
 If you prefer the upstream Skilljar workflow, it still works unchanged:
 
 ```powershell
-cd examples/mcp_cli
+cd mcp-example/mcp_cli
 uv venv
 . .venv/Scripts/Activate.ps1
 uv pip install -e .
@@ -61,7 +61,7 @@ This copy is **as-distributed by Anthropic's course**, with three exceptions:
 
    Neither change affects the MCP client, the server, or the chat loop. The upstream Skilljar workflow still runs unmodified on macOS and Linux, where this code path is a no-op.
 
-The on-rails launcher [`../../scripts/run-mcp-cli.ps1`](../../scripts/run-mcp-cli.ps1) lives **outside** this directory and is not counted as a modification to the vendored tree. It interacts with `examples/mcp_cli/` only by reading `.env.example` and writing `.env` (which is gitignored), and by invoking `uv run` against `pyproject.toml` as a black box.
+The on-rails launcher [`../../scripts/run-mcp-cli.ps1`](../../scripts/run-mcp-cli.ps1) lives **outside** this directory and is not counted as a modification to the vendored tree. It interacts with `mcp-example/mcp_cli/` only by reading `.env.example` and writing `.env` (which is gitignored), and by invoking `uv run` against `pyproject.toml` as a black box.
 
 If you want the canonical source, return to https://anthropic.skilljar.com/claude-with-the-anthropic-api/.
 

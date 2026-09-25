@@ -396,17 +396,17 @@ for name, spec in servers.items():
 _mcp_server_source_md = """\
 ## What an MCP server actually looks like (source, not config)
 
-`.mcp.json` is the **client side**. The **server side** is real Python, and `../examples/mcp_cli/mcp_server.py` is a complete **FastMCP** one in ~95 lines: six documents as resources, a `read_doc_contents` tool, an `edit_document` tool, and a `format` prompt, all over **stdio**.
+`.mcp.json` is the **client side**. The **server side** is real Python, and `../mcp-example/mcp_cli/mcp_server.py` is a complete **FastMCP** one in ~95 lines: six documents as resources, a `read_doc_contents` tool, an `edit_document` tool, and a `format` prompt, all over **stdio**.
 
 Four idioms to spot in the printout: **`@mcp.tool`**, **`@mcp.resource`**, **`@mcp.prompt`**, and the **`mcp.run(transport="stdio")`** entrypoint.
 
-> Reference material from Anthropic's Skilljar course; see [`NOTICE.md`](../examples/mcp_cli/NOTICE.md). Run it after class with `uv run main.py` from `examples/mcp_cli/`.
+> Reference material from Anthropic's Skilljar course; see [`NOTICE.md`](../mcp-example/mcp_cli/NOTICE.md). Run it after class with `uv run main.py` from `mcp-example/mcp_cli/`.
 """
 
 _mcp_server_source_code = """\
-mcp_server_path = REPO_ROOT / "examples" / "mcp_cli" / "mcp_server.py"
+mcp_server_path = REPO_ROOT / "mcp-example" / "mcp_cli" / "mcp_server.py"
 if not mcp_server_path.exists():
-    print(f"[skip] {mcp_server_path} not found; see examples/mcp_cli/NOTICE.md")
+    print(f"[skip] {mcp_server_path} not found; see mcp-example/mcp_cli/NOTICE.md")
 else:
     source = mcp_server_path.read_text(encoding="utf-8")
     # Walk the structurally interesting lines, not the whole 95-line file
@@ -842,7 +842,7 @@ _key_takeaways_md = """\
 - `../claude-cookbooks-main/tool_use/tool_choice.ipynb` - the four modes, runnable
 - `../claude-cookbooks-main/tool_use/parallel_tools.ipynb` - parallel calls plus caching
 - `../claude-cookbooks-main/tool_use/customer_service_agent.ipynb` - the Segment 1 agent shape
-- `../examples/mcp_cli/` - full MCP CLI app (FastMCP server + client + chat); see `NOTICE.md`
+- `../mcp-example/mcp_cli/` - full MCP CLI app (FastMCP server + client + chat); see `NOTICE.md`
 """
 
 _bridge_md = """\
@@ -866,8 +866,8 @@ Segment 2 carries **Domains 2 and 3**, the heaviest pairing on the exam at 38% o
 ### Run the MCP demo yourself
 
 - [`../.mcp.json`](../.mcp.json) - the config anchor we printed: six servers, three transports, `${ENV_VAR}` expansion.
-- [`../examples/mcp_cli/mcp_server.py`](../examples/mcp_cli/mcp_server.py) - the FastMCP server whose source we walked, registered as `oreilly-cca-mcp`.
-- [`../examples/mcp_cli/`](../examples/mcp_cli/) - the full vendored MCP CLI app; attribution is in [`NOTICE.md`](../examples/mcp_cli/NOTICE.md).
+- [`../mcp-example/mcp_cli/mcp_server.py`](../mcp-example/mcp_cli/mcp_server.py) - the FastMCP server whose source we walked, registered as `oreilly-cca-mcp`.
+- [`../mcp-example/mcp_cli/`](../mcp-example/mcp_cli/) - the full vendored MCP CLI app; attribution is in [`NOTICE.md`](../mcp-example/mcp_cli/NOTICE.md).
 - [`../scripts/run-mcp-cli.ps1`](../scripts/run-mcp-cli.ps1) - starts that CLI app with one command, no venv archaeology.
 - [`../scripts/run-mcp-inspector.ps1`](../scripts/run-mcp-inspector.ps1) - launches the **MCP Inspector** against the demo server and owns ports 6274 and 6277 so you can click through tools, resources, and prompts.
 - [`../.vscode/mcp.json`](../.vscode/mcp.json) - the VS Code and Copilot sibling config. It keys servers under `servers`, while Claude Code's `.mcp.json` uses `mcpServers`, so don't copy one over the other.

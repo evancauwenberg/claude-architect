@@ -113,7 +113,7 @@ ipython_config.py
 #   intended to run in multiple environments; otherwise, check them in:
 # .python-version
 
-# Counter-ignore: this repo DOES commit .python-version (examples/mcp_cli/ pins 3.13
+# Counter-ignore: this repo DOES commit .python-version (mcp-example/mcp_cli/ pins 3.13
 # to avoid the jiter 3.14-incompat build failure). Overrides Tim's global ignore.
 !.python-version
 !**/.python-version
@@ -175,8 +175,8 @@ ENV/
 env.bak/
 venv.bak/
 
-# Belt-and-suspenders: any .env anywhere under examples/ (subdir gitignores already cover the main case)
-examples/**/.env
+# Belt-and-suspenders: any .env anywhere under mcp-example/ (subdir gitignores already cover the main case)
+mcp-example/**/.env
 
 # Spyder project settings
 .spyderproject

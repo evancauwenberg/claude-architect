@@ -10,7 +10,7 @@
       Tooling      uv, node, npx, git on PATH
       Secrets      ANTHROPIC_API_KEY populated in repo-root .env and the
                    mcp_cli .env; GITHUB_TOKEN present in the environment
-      Environments notebooks/.venv and examples/mcp_cli/.venv both real, with
+      Environments notebooks/.venv and mcp-example/mcp_cli/.venv both real, with
                    a python.exe that actually exists
       Kernel       the claude-architect kernelspec is registered and its
                    argv[0] points at notebooks/.venv (not a stray system Python)
@@ -111,7 +111,7 @@ switch (Test-EnvKey -Path $rootEnv -Key 'ANTHROPIC_API_KEY') {
     default        { Add-Check 'Secrets' 'root .env ANTHROPIC_API_KEY' 'FAIL' "key is $_" }
 }
 
-$mcpEnv = Join-Path $repoRoot 'examples\mcp_cli\.env'
+$mcpEnv = Join-Path $repoRoot 'mcp-example\mcp_cli\.env'
 switch (Test-EnvKey -Path $mcpEnv -Key 'ANTHROPIC_API_KEY') {
     'ok'           { Add-Check 'Secrets' 'mcp_cli .env ANTHROPIC_API_KEY' 'PASS' 'populated' }
     'missing-file' { Add-Check 'Secrets' 'mcp_cli .env ANTHROPIC_API_KEY' 'WARN' 'absent; run-mcp-cli.ps1 will bootstrap it' }
@@ -133,7 +133,7 @@ else {
 # the broken shell.
 foreach ($venv in @(
     @{ Label = 'notebooks/.venv';        Path = (Join-Path $repoRoot 'notebooks\.venv') },
-    @{ Label = 'examples/mcp_cli/.venv'; Path = (Join-Path $repoRoot 'examples\mcp_cli\.venv') }
+    @{ Label = 'mcp-example/mcp_cli/.venv'; Path = (Join-Path $repoRoot 'mcp-example\mcp_cli\.venv') }
 )) {
     $py = Join-Path $venv.Path 'Scripts\python.exe'
     if (Test-Path -LiteralPath $py -PathType Leaf) {

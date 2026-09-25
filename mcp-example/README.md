@@ -3,7 +3,7 @@
 `mcp_cli/` - the vendored reference MCP CLI app from Anthropic's Skilljar course. Its own **separate uv project** (own `pyproject.toml`, `uv.lock`, `.python-version` pinned to 3.13) - it doesn't share the notebook environment, and doesn't belong in `notebooks/` alongside the teaching content.
 
 ```powershell
-cd examples\mcp_cli
+cd mcp-example\mcp_cli
 uv run main.py
 ```
 

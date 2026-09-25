@@ -92,7 +92,7 @@ npm install --prefix cca-cert-buddy           # deps for the cca-study-mcp serve
 [ -f .env ] || printf 'ANTHROPIC_API_KEY=sk-ant-...\n' > .env   # then paste your real key
 ```
 
-The **system `python3` version does not matter**: uv supplies the 3.13 the notebooks pin. The kernelspec lands in `~/Library/Jupyter/kernels/claude-architect/`, and its `argv[0]` must point into `notebooks/.venv/bin/`. `.mcp.json` expands **`${PROJECT_ROOT}`** for three servers, so `export PROJECT_ROOT="$PWD"` in the shell you start Claude Code from. That fixes `filesystem` only: as of 2026-09-22, `oreilly-cca-mcp` still points at the old `examples/mcp_cli` path, and `cca-study-mcp` relies on a `cwd` key Claude Code does not apply, so both still fail to connect.
+The **system `python3` version does not matter**: uv supplies the 3.13 the notebooks pin. The kernelspec lands in `~/Library/Jupyter/kernels/claude-architect/`, and its `argv[0]` must point into `notebooks/.venv/bin/`. `.mcp.json` expands **`${PROJECT_ROOT}`** for three servers, so `export PROJECT_ROOT="$PWD"` in the shell you start Claude Code from. With it set, `filesystem` and `oreilly-cca-mcp` connect. `cca-study-mcp` still fails: it relies on a `cwd` key Claude Code does not apply.
 
 `preflight-class.sh` FAILs on a fresh clone because **`.vscode/mcp.json` is untracked by design**. Copy it from the instructor box, or start with `./start-sidecar-group.sh --skip-preflight` if you do not teach from VS Code Copilot.
 

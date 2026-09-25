@@ -86,8 +86,8 @@ claude-architect/
 │   ├── 00-prerequisites/                      # 10 Messages API primer notebooks - the on-ramp to the raw API
 │   └── 06-managed-agents/                     # 6 Managed Agents notebooks - Anthropic hosts the loop, domain-banded
 ├── claude-cookbooks-main/      # Vendored snapshot of Anthropic's official Claude Cookbooks (MIT, Copyright (c) 2023 Anthropic). See claude-cookbooks-main/NOTICE.md
-├── examples/                   # One runnable example suite (self-paced study, not on the 4-hour clock)
-│   └── mcp_cli/                # Reference MCP CLI (FastMCP server + client + chat), from Anthropic's Skilljar course. See examples/mcp_cli/NOTICE.md
+├── mcp-example/                # One runnable example suite (self-paced study, not on the 4-hour clock)
+│   └── mcp_cli/                # Reference MCP CLI (FastMCP server + client + chat), from Anthropic's Skilljar course. See mcp-example/mcp_cli/NOTICE.md
 ├── slides/                     # Course slide deck (rebuilt from scripts/build-deck.py)
 └── scripts/
     ├── build-notebooks.py                 # Rebuilds the seven teaching notebooks from source (sha256-deterministic, idempotent)
@@ -153,7 +153,7 @@ When a demo goes sideways mid-class, [`docs/EMERGENCY-CARD.md`](./docs/EMERGENCY
 
 ### The `notebooks/` self-paced suites (off the 4-hour clock)
 
-[`notebooks/`](./notebooks/) is the unified course tree: the seven live-taught segment notebooks at its root, plus two self-paced suites that bookend them - an on-ramp for people new to the raw API and a managed-agents counterpart to the loops the course hand-rolls. [`examples/`](./examples/) now holds only the standalone [`mcp_cli/`](./examples/mcp_cli/) reference app, a separate vendored uv project. None of the self-paced material is on the 4-hour clock, and all of it is runnable.
+[`notebooks/`](./notebooks/) is the unified course tree: the seven live-taught segment notebooks at its root, plus two self-paced suites that bookend them - an on-ramp for people new to the raw API and a managed-agents counterpart to the loops the course hand-rolls. [`mcp-example/`](./mcp-example/) holds only the standalone [`mcp_cli/`](./mcp-example/mcp_cli/) reference app, a separate vendored uv project. None of the self-paced material is on the 4-hour clock, and all of it is runnable.
 
 #### `notebooks/00-prerequisites/` - the API on-ramp
 
@@ -174,15 +174,15 @@ The live course teaches you to **hand-roll the agentic loop**, because you can't
 
 All six are smoke-verified green, and **all six archive the resources they create**, so a full run leaves nothing behind in your Console workspace. Read them after the live segments, not before - the managed loop is much easier to trust once you've written the unmanaged one.
 
-#### `examples/mcp_cli/` - the MCP reference app (one command)
+#### `mcp-example/mcp_cli/` - the MCP reference app (one command)
 
-The vendored [`examples/mcp_cli/`](./examples/mcp_cli/) Skilljar reference app gets the same on-rails treatment via a wrapper that auto-bootstraps its `.env` and hands off to `uv`:
+The vendored [`mcp-example/mcp_cli/`](./mcp-example/mcp_cli/) Skilljar reference app gets the same on-rails treatment via a wrapper that auto-bootstraps its `.env` and hands off to `uv`:
 
 ```powershell
 .\scripts\run-mcp-cli.ps1
 ```
 
-First run creates `examples/mcp_cli/.env` from the template, lifts `ANTHROPIC_API_KEY` from your repo-root `.env`, and then runs `uv run --directory examples/mcp_cli main.py`. Subsequent runs go straight to the REPL. The wrapper sits in [`scripts/run-mcp-cli.ps1`](./scripts/run-mcp-cli.ps1) and never touches the vendored `examples/mcp_cli/` tree, preserving the NOTICE.md modification count at 2. Its FastMCP server is what [`.mcp.json`](./.mcp.json) registers as **`oreilly-cca-mcp`**, and it's the server [`scripts/run-mcp-inspector.ps1`](./scripts/run-mcp-inspector.ps1) points the MCP Inspector at.
+First run creates `mcp-example/mcp_cli/.env` from the template, lifts `ANTHROPIC_API_KEY` from your repo-root `.env`, and then runs `uv run --directory mcp-example/mcp_cli main.py`. Subsequent runs go straight to the REPL. The wrapper sits in [`scripts/run-mcp-cli.ps1`](./scripts/run-mcp-cli.ps1) and never touches the vendored `mcp-example/mcp_cli/` tree, preserving the NOTICE.md modification count at 2. Its FastMCP server is what [`.mcp.json`](./.mcp.json) registers as **`oreilly-cca-mcp`**, and it's the server [`scripts/run-mcp-inspector.ps1`](./scripts/run-mcp-inspector.ps1) points the MCP Inspector at.
 
 ### Recommended learning path
 
@@ -296,10 +296,10 @@ This repo bundles several distinct bodies of work. The split matters for attribu
 
 - **Original content by Tim Warner.** Everything in [`notebooks/`](./notebooks/), including [`notebooks/06-managed-agents/`](./notebooks/06-managed-agents/), the five [`domain-*.md`](./docs/domain-1-agentic.md) reference files, [`COURSE-FLOW.md`](./COURSE-FLOW.md), [`CERT-PROGRAM-BRIEFING.md`](./docs/CERT-PROGRAM-BRIEFING.md), [`PRE-CLASS-CHECKLIST.md`](./docs/PRE-CLASS-CHECKLIST.md), [`INSTRUCTOR-SETUP.md`](./docs/INSTRUCTOR-SETUP.md), [`CLAUDE.md`](./CLAUDE.md), and everything under [`scripts/`](./scripts/) is authored by Tim Warner and licensed under MIT via this repo's [`LICENSE`](./LICENSE) file.
 - **Vendored Anthropic content.** [`claude-cookbooks-main/`](./claude-cookbooks-main/) is a vendored copy of Anthropic's official [Claude Cookbooks](https://github.com/anthropics/claude-cookbooks), MIT licensed, **Copyright (c) 2023 Anthropic**. Full attribution, upstream commit reference, and the unmodified MIT license live in [`claude-cookbooks-main/NOTICE.md`](./claude-cookbooks-main/NOTICE.md) and [`claude-cookbooks-main/LICENSE`](./claude-cookbooks-main/LICENSE). It is committed here so learners get the entire reference library on `git clone` without a second clone step.
-- **Reference application from Anthropic's Skilljar course.** [`examples/mcp_cli/`](./examples/mcp_cli/) is a complete MCP CLI application (stdio FastMCP server + client + interactive chat with `@doc-id` retrieval and `/prompt-name` commands) distributed as starter material with Anthropic's [Claude with the Anthropic API](https://anthropic.skilljar.com/claude-with-the-anthropic-api/) Skilljar course. Treated as Anthropic-authored instructional reference; full attribution and the two minor modifications (rename `.env` to `.env.example`, add `NOTICE.md`) are documented in [`examples/mcp_cli/NOTICE.md`](./examples/mcp_cli/NOTICE.md). Segment 2 of the course opens its `mcp_server.py` source during Demo A.
+- **Reference application from Anthropic's Skilljar course.** [`mcp-example/mcp_cli/`](./mcp-example/mcp_cli/) is a complete MCP CLI application (stdio FastMCP server + client + interactive chat with `@doc-id` retrieval and `/prompt-name` commands) distributed as starter material with Anthropic's [Claude with the Anthropic API](https://anthropic.skilljar.com/claude-with-the-anthropic-api/) Skilljar course. Treated as Anthropic-authored instructional reference; full attribution and the two minor modifications (rename `.env` to `.env.example`, add `NOTICE.md`) are documented in [`mcp-example/mcp_cli/NOTICE.md`](./mcp-example/mcp_cli/NOTICE.md). Segment 2 of the course opens its `mcp_server.py` source during Demo A.
 - **Practice bank with split provenance.** In [`PRACTICE-QUESTIONS.md`](./docs/PRACTICE-QUESTIONS.md) the question stems, options, and correct answers are community-sourced from Paul Larionov's study repo; the answer explanations are this repo's own work, grounded in Anthropic documentation. The file is hand-maintained (see the [Disclaimer](#disclaimer) below for the full provenance and calibration-only framing).
 - **Adapted community content.** The primer notebooks in [`notebooks/00-prerequisites/`](./notebooks/00-prerequisites/) are adapted from [jaozc/building-with-the-claude-api](https://github.com/jaozc/building-with-the-claude-api), with three portability fixes for this repo: the install cell shells out to `uv pip install` rather than `%pip` (uv venvs ship without pip), the model is pinned to `claude-haiku-4-5` per this repo's model policy, and the demo prompts are Azure-first. Attribution is in each notebook's first cell and in [`examples/README.md`](./examples/README.md). The managed-agents notebooks in [`notebooks/06-managed-agents/`](./notebooks/06-managed-agents/) are original work by Tim Warner and fall under this repo's MIT license.
-- **Point-in-time snapshots, not submodules.** Both [`claude-cookbooks-main/`](./claude-cookbooks-main/) and [`examples/mcp_cli/`](./examples/mcp_cli/) are static snapshots, not git submodules. Refresh procedures are documented in each directory's `NOTICE.md`.
+- **Point-in-time snapshots, not submodules.** Both [`claude-cookbooks-main/`](./claude-cookbooks-main/) and [`mcp-example/mcp_cli/`](./mcp-example/mcp_cli/) are static snapshots, not git submodules. Refresh procedures are documented in each directory's `NOTICE.md`.
 
 ## Disclaimer
 

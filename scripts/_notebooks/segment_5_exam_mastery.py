@@ -852,7 +852,7 @@ _part2_mcp_discovery_md = """\
 
 **`list_tools()`** is the discovery primitive. Your MCP client connects to a server and asks "what tools do you expose?" The server returns a list of schemas, which you merge into the `tools=[...]` parameter passed to `messages.create()`. **No source change to add a new tool** - just deploy a new server (or add a tool to an existing one) and the next `list_tools()` picks it up.
 
-The cell below launches this repo's own FastMCP demo server (`examples/mcp_cli/mcp_server.py`, configured as `oreilly-cca-mcp` in `.mcp.json`) over stdio and calls `list_tools`, `list_resources`, `list_prompts`. **Zero Anthropic tokens** - this is pure MCP protocol over stdio.
+The cell below launches this repo's own FastMCP demo server (`mcp-example/mcp_cli/mcp_server.py`, configured as `oreilly-cca-mcp` in `.mcp.json`) over stdio and calls `list_tools`, `list_resources`, `list_prompts`. **Zero Anthropic tokens** - this is pure MCP protocol over stdio.
 
 The cell is wrapped in try/except: if the MCP Python SDK or `uv` is not on the box, it skips gracefully with a labeled message.
 """
@@ -872,9 +872,9 @@ try:
 
     params = StdioServerParameters(
         command="uv",
-        args=["run", "--directory", str(REPO_ROOT / "examples" / "mcp_cli"), "mcp_server.py"],
+        args=["run", "--directory", str(REPO_ROOT / "mcp-example" / "mcp_cli"), "mcp_server.py"],
     )
-    print("=== Live MCP discovery against examples/mcp_cli/mcp_server.py ===")
+    print("=== Live MCP discovery against mcp-example/mcp_cli/mcp_server.py ===")
     async with stdio_client(params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
@@ -908,7 +908,7 @@ except Exception as exc:
     # A real failure. Say so plainly rather than blaming the environment.
     print(f"(MCP discovery FAILED: {type(exc).__name__}: {str(exc)[:160]})")
     print("This one is real. Check that `uv` is on PATH and that")
-    print("examples/mcp_cli/ is bootstrapped (`uv sync` in that directory).")
+    print("mcp-example/mcp_cli/ is bootstrapped (`uv sync` in that directory).")
     print("The .mcp.json inspection above still demonstrates TS2.4.")
 '''
 
