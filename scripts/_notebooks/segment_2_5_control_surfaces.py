@@ -240,15 +240,15 @@ _tier2_md = """\
 
 **The discovery primitive** is `list_tools()`. The MCP client calls it against each connected server and merges the schemas into the `tools=[]` array passed to `messages.create()`. The reference implementation in this repo:
 
-- `examples/mcp_cli/mcp_client.py:69-71` - `MCPClient.list_tools()`
-- `examples/mcp_cli/core/tools.py:10-23` - `ToolManager.get_all_tools()` (merge-across-servers)
+- `mcp-example/mcp_cli/mcp_client.py:69-71` - `MCPClient.list_tools()`
+- `mcp-example/mcp_cli/core/tools.py:10-23` - `ToolManager.get_all_tools()` (merge-across-servers)
 
 Below we print those excerpts verbatim. **They are short.** The pattern is small because the protocol does the heavy lifting.
 """
 
 _tier2_code = '''\
-mcp_client_path = REPO_ROOT / "examples" / "mcp_cli" / "mcp_client.py"
-tool_manager_path = REPO_ROOT / "examples" / "mcp_cli" / "core" / "tools.py"
+mcp_client_path = REPO_ROOT / "mcp-example" / "mcp_cli" / "mcp_client.py"
+tool_manager_path = REPO_ROOT / "mcp-example" / "mcp_cli" / "core" / "tools.py"
 
 def print_excerpt(path: Path, start: int, end: int, label: str) -> None:
     lines = path.read_text(encoding="utf-8").splitlines()

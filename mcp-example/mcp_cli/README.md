@@ -19,13 +19,13 @@ From the repo root, the wrapper script handles `.env` bootstrap and the `uv run`
 
 What it does on **first run**:
 
-1. Creates `examples/mcp_cli/.env` from `.env.example` if it does not exist.
+1. Creates `mcp-example/mcp_cli/.env` from `.env.example` if it does not exist.
 2. Lifts `ANTHROPIC_API_KEY` from the repo-root `.env` (the one the teaching notebooks already use) so you do not paste the key twice.
-3. Invokes `uv run --directory examples/mcp_cli main.py`. uv auto-creates `examples/mcp_cli/.venv` and installs all deps (~20s cold, ~1.5s warm thereafter).
+3. Invokes `uv run --directory mcp-example/mcp_cli main.py`. uv auto-creates `mcp-example/mcp_cli/.venv` and installs all deps (~20s cold, ~1.5s warm thereafter).
 
 Subsequent runs skip step 1 and 2 and go straight to the REPL. The script is idempotent.
 
-If you have **no repo-root `.env`**, the wrapper creates a stub `.env` inside `examples/mcp_cli/` and exits non-zero with a "fill in your key" message so you do not burn tokens on a placeholder.
+If you have **no repo-root `.env`**, the wrapper creates a stub `.env` inside `mcp-example/mcp_cli/` and exits non-zero with a "fill in your key" message so you do not burn tokens on a placeholder.
 
 The manual ceremony below is preserved for reference fidelity with the upstream Skilljar course.
 

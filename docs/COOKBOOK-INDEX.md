@@ -34,7 +34,7 @@ Three of these cookbooks (`customer_service_agent`, `tool_use_with_pydantic`, `e
 ## Notes on the FAIL / NOT-SMOKED entries
 
 - **`parallel_tools.ipynb`** and **`automatic-context-compaction.ipynb`** are documented **upstream bugs**, not environment problems. All their import-level dependencies are satisfied in `notebooks\.venv`, so both **load and render fine in VS Code** - the FAIL is a runtime error in a later cell. Do not patch the vendored notebooks to fix them - the correct path is an upstream PR to `anthropics/claude-cookbooks`. The smoke script's FAIL flipping to PASS confirms the upstream fix when the snapshot is re-pulled.
-- **`01_The_chief_of_staff_agent.ipynb`** is the only cookbook with a genuinely missing dependency: `claude-agent-sdk` is not in `notebooks\.venv`. The notebook opens and renders in VS Code, but its first code cell errors on run. It also needs the Claude Code CLI on PATH. Treat it like `examples/mcp_cli/` - a separate setup, not part of the notebook environment.
+- **`01_The_chief_of_staff_agent.ipynb`** is the only cookbook with a genuinely missing dependency: `claude-agent-sdk` is not in `notebooks\.venv`. The notebook opens and renders in VS Code, but its first code cell errors on run. It also needs the Claude Code CLI on PATH. Treat it like `mcp-example/mcp_cli/` - a separate setup, not part of the notebook environment.
 
 **If you need a green run of these three patterns**, this repo has one for each:
 

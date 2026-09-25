@@ -4,7 +4,9 @@
   "description": "Reference materials and demo assets for the Claude Architect Foundations 4-hour O'Reilly live training",
   "scripts": {
     "lint:voice": "pwsh -NoProfile -File ./scripts/voice-lint.ps1",
-    "preflight": "pwsh -NoProfile -File ./scripts/preflight.ps1"
+    "preflight": "pwsh -NoProfile -File ./scripts/preflight.ps1",
+    "lint:voice:zsh": "zsh ./scripts/voice-lint.sh",
+    "preflight:zsh": "zsh ./scripts/preflight.sh"
   },
   "keywords": [
     "claude",

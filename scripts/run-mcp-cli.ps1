@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    On-rails launcher for the vendored MCP CLI reference app in examples/mcp_cli/.
+    On-rails launcher for the vendored MCP CLI reference app in mcp-example/mcp_cli/.
 
 .DESCRIPTION
     Mirrors the single-command UX that the teaching notebooks already enjoy:
@@ -9,11 +9,11 @@
         MCP CLI:   .\scripts\run-mcp-cli.ps1
 
     First run does three things idempotently:
-      1. Creates examples/mcp_cli/.env from .env.example if it does not exist.
+      1. Creates mcp-example/mcp_cli/.env from .env.example if it does not exist.
       2. Lifts ANTHROPIC_API_KEY from the repo-root .env into the new file so the
          learner does not have to paste the key twice.
-      3. Hands off to `uv run --directory examples/mcp_cli main.py`, which lets
-         uv auto-create examples/mcp_cli/.venv on first invocation (~20s cold,
+      3. Hands off to `uv run --directory mcp-example/mcp_cli main.py`, which lets
+         uv auto-create mcp-example/mcp_cli/.venv on first invocation (~20s cold,
          ~1.5s warm thereafter).
 
     The vendored mcp_cli/ tree is untouched. This script is the only on-rails
@@ -27,7 +27,7 @@
 .EXAMPLE
     .\scripts\run-mcp-cli.ps1
     First run from a clean checkout, assuming repo-root .env has ANTHROPIC_API_KEY.
-    Creates examples/mcp_cli/.env, lifts the key, then launches the chat REPL.
+    Creates mcp-example/mcp_cli/.env, lifts the key, then launches the chat REPL.
 
 .EXAMPLE
     .\scripts\run-mcp-cli.ps1 -ServerScripts .\path\to\extra_server.py
@@ -37,7 +37,7 @@
     Author: Tim Warner
     Why a wrapper instead of doc-only? The notebooks setup tells learners to
     create ONE .env at the repo root. The vendored mcp_cli expects its own .env
-    inside examples/mcp_cli/. Without a bridge, learners paste the API key
+    inside mcp-example/mcp_cli/. Without a bridge, learners paste the API key
     twice and inevitably let the two copies drift. This script eliminates that
     friction without modifying vendored code (preserves NOTICE.md fidelity).
 #>
@@ -50,13 +50,13 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$mcpDir   = Join-Path $repoRoot 'examples\mcp_cli'
+$mcpDir   = Join-Path $repoRoot 'mcp-example\mcp_cli'
 $mcpEnv   = Join-Path $mcpDir   '.env'
 $mcpEnvEx = Join-Path $mcpDir   '.env.example'
 $rootEnv  = Join-Path $repoRoot '.env'
 
 if (-not (Test-Path $mcpDir)) {
-    throw "MCP CLI directory not found at $mcpDir. Was the examples/mcp_cli/ tree deleted?"
+    throw "MCP CLI directory not found at $mcpDir. Was the mcp-example/mcp_cli/ tree deleted?"
 }
 if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     throw "uv is not on PATH. Install with 'winget install astral-sh.uv' or 'pip install uv', then re-run."
@@ -95,7 +95,7 @@ if (-not (Test-Path $mcpEnv)) {
 }
 
 # uv run --directory ensures pyproject.toml discovery and CWD both land in
-# examples/mcp_cli/ so main.py's load_dotenv() and its `uv run mcp_server.py`
+# mcp-example/mcp_cli/ so main.py's load_dotenv() and its `uv run mcp_server.py`
 # subprocess both resolve correctly without --project.
 $uvArgs = @('run', '--directory', $mcpDir, 'main.py') + $ServerScripts
 & uv @uvArgs

@@ -324,7 +324,7 @@ One file per exam domain, each a ~1000-word reference with cookbook anchors and 
 
 - [**`00-prerequisites/`**](00-prerequisites/) holds ten Messages API primer notebooks, `001_requests` through `005_controlling_output` plus exercises. Start here if the raw API still feels shaky.
 - [**`06-managed-agents/`**](06-managed-agents/) holds six Managed Agents notebooks, domain-banded 01 through 06 and ending in `06_cca_f_capstone.ipynb`. This is the "Anthropic hosts the loop" counterpart to the loops you hand-rolled today.
-- [**`../examples/mcp_cli/`**](../examples/mcp_cli/) is the vendored reference MCP CLI app from Segment 2.
+- [**`../mcp-example/mcp_cli/`**](../mcp-example/mcp_cli/) is the vendored reference MCP CLI app from Segment 2.
 - [**`../claude-cookbooks-main/`**](../claude-cookbooks-main/) is Anthropic's official cookbook, vendored under MIT. [`../docs/COOKBOOK-INDEX.md`](../docs/COOKBOOK-INDEX.md) tells you which cookbook backs which segment.
 
 ### Course scaffolding

@@ -29,7 +29,7 @@
     The 8th cited cookbook (claude_agent_sdk/01_The_chief_of_staff_agent.ipynb)
     is RED and intentionally not smoked here. It needs the claude-agent-sdk
     Python package plus the Claude Code CLI binary plus a multi-file sibling
-    project. Treat it like examples/mcp_cli/ - separate uv subproject, not
+    project. Treat it like mcp-example/mcp_cli/ - separate uv subproject, not
     something to wire into notebooks/.venv. Deferred to a future sprint.
 
     The two FAIL entries are documented because they're real upstream issues,
@@ -70,7 +70,7 @@
     Author: Tim Warner
     Author-note: cookbook content is vendored from Anthropic under MIT.
     Modifying it would force a NOTICE.md modification count increment
-    (currently 0 for claude-cookbooks-main/, 2 for examples/mcp_cli/).
+    (currently 0 for claude-cookbooks-main/, 2 for mcp-example/mcp_cli/).
     This script preserves the 0-modification count by writing smokes to
     sibling files instead.
 #>
